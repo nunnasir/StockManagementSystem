@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using StockManagementSystem.Models;
 using StockManagementSystem.BLL;
+using StockManagementSystem.Models;
 using StockManagementSystem.DAL;
 
-namespace StockManagementSystem.UI.Company
+
+namespace StockManagementSystem.UI.CategoryUI
 {
-    public partial class CompanyForm : Form
+    public partial class CategoryForm : Form
     {
-        public CompanyForm()
+        public CategoryForm()
         {
             InitializeComponent();
         }
 
-        Companny companny = new Companny();
-        CompanyManagement companyManagement = new CompanyManagement();
-        CompanyRepository companyRepository = new CompanyRepository();
+        Category category = new Category();
+        CategoryManagement categoryManagement = new CategoryManagement();
+        CategoryRepository categoryRepository = new CategoryRepository();
 
 
         private void nameTextBox_TextChanged(object sender, EventArgs e)
         {
-            companny.Name = nameTextBox.Text;
-            bool isExist = companyManagement.IsExisted(companny);
+            category.Name = nameTextBox.Text;
+            bool isExist = categoryManagement.IsExisted(category);
             if (isExist)
             {
                 categoryErrorLabel.Text = "* This Categerory Already Existed!!";
@@ -37,60 +39,64 @@ namespace StockManagementSystem.UI.Company
             categoryErrorLabel.Text = "";
         }
 
-        //Save Company
+        //Save Category
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            companny.Name = nameTextBox.Text;
-            companny.ErrorText = categoryErrorLabel.Text;
+            category.Name = nameTextBox.Text;
+            category.ErrorText = categoryErrorLabel.Text;
 
-            bool verify = companyManagement.IsVerified(companny);
+            bool verify = categoryManagement.IsVerified(category);
             if (verify)
             {
                 MessageBox.Show("Field Must Not Be Empty!!");
                 return;
             }
+            
 
-            bool error = companyManagement.IsError(companny);
+            bool error = categoryManagement.IsError(category);
             if (error)
             {
                 MessageBox.Show("Please Resolve Your Error!!");
                 return;
             }
+            
 
-            bool isAdd = companyManagement.IsAdded(companny);
+            bool isAdd = categoryManagement.IsAdded(category);
             if (isAdd)
             {
                 nameTextBox.Clear();
-
+                
                 DataTable dt = new DataTable();
-                dt = companyRepository.AddCompany();
-                companyDataGridView.DataSource = dt;
+                dt = categoryRepository.AddCategory();
+                categoryDataGridView.DataSource = dt;
             }
+
         }
 
+
         //Show Item TextBox on DoubleClick
-        private void companyDataGridView_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void categoryDataGridView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            nameTextBox.Text = companyDataGridView.CurrentRow.Cells[0].Value.ToString();
-            companny.OldName = nameTextBox.Text;
+            nameTextBox.Text = categoryDataGridView.CurrentRow.Cells[0].Value.ToString();
+            category.OldName = nameTextBox.Text;
             UpdateButton.Show();
             UpdateButton.Location = new Point(369, 86);
             SaveButton.Hide();
         }
 
-        //Update Company
+        //Update Category
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            companny.Name = nameTextBox.Text;
+            category.Name = nameTextBox.Text;
 
-            bool verify = companyManagement.IsVerified(companny);
+            bool verify = categoryManagement.IsVerified(category);
             if (verify)
             {
                 MessageBox.Show("Field Must Not Be Empty!!");
                 return;
             }
 
-            bool isUpdate = companyManagement.IsUpdated(companny);
+            bool isUpdate = categoryManagement.IsUpdated(category);
             if (isUpdate)
             {
                 MessageBox.Show("Update Successfully!!");
@@ -98,17 +104,17 @@ namespace StockManagementSystem.UI.Company
                 UpdateButton.Hide();
                 SaveButton.Show();
                 DataTable dt = new DataTable();
-                dt = companyRepository.AddCompany();
-                companyDataGridView.DataSource = dt;
+                dt = categoryRepository.AddCategory();
+                categoryDataGridView.DataSource = dt;
             }
         }
 
         //Form Load
-        private void CompanyForm_Load(object sender, EventArgs e)
+        private void CategoryForm_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
-            dt = companyRepository.AddCompany();
-            companyDataGridView.DataSource = dt;
+            dt = categoryRepository.AddCategory();
+            categoryDataGridView.DataSource = dt;
         }
 
         //Override Form Close Button

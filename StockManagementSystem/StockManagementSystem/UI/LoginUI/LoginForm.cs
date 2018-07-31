@@ -24,6 +24,7 @@ namespace StockManagementSystem
         private void LoginButton_Click(object sender, EventArgs e)
         {
             Login login = new Login();
+
             LoginManager loginManager = new LoginManager();
             login.Name = nameTextBox.Text;
             login.Password = passTextBox.Text;

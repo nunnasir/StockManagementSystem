@@ -53,7 +53,7 @@
             this.CompanyButton.Name = "CompanyButton";
             this.CompanyButton.Size = new System.Drawing.Size(157, 28);
             this.CompanyButton.TabIndex = 0;
-            this.CompanyButton.Text = "Company Setup";
+            this.CompanyButton.Text = "Companny Setup";
             this.CompanyButton.UseVisualStyleBackColor = true;
             this.CompanyButton.Click += new System.EventHandler(this.CompanyButton_Click);
             // 

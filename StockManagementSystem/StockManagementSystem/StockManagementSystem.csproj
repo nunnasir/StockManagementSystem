@@ -44,14 +44,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\CategoryManagement.cs" />
+    <Compile Include="BLL\CompanyManagement.cs" />
+    <Compile Include="BLL\ItemManagement.cs" />
     <Compile Include="BLL\LoginManager.cs" />
+    <Compile Include="DAL\CategoryRepository.cs" />
+    <Compile Include="DAL\CompanyRepository.cs" />
+    <Compile Include="DAL\ItemRepository.cs" />
     <Compile Include="DAL\LoginRepository.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Companny.cs" />
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Login.cs" />
-    <Compile Include="UI\Category\CategoryForm.cs">
+    <Compile Include="UI\CategoryUI\CategoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Category\CategoryForm.Designer.cs">
+    <Compile Include="UI\CategoryUI\CategoryForm.Designer.cs">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Company\CompanyForm.cs">
@@ -104,7 +113,7 @@
     <Compile Include="UI\StockOut\StockOutForm.Designer.cs">
       <DependentUpon>StockOutForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\Category\CategoryForm.resx">
+    <EmbeddedResource Include="UI\CategoryUI\CategoryForm.resx">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Company\CompanyForm.resx">
@@ -140,6 +149,9 @@
     <EmbeddedResource Include="UI\StockOut\StockOutForm.resx">
       <DependentUpon>StockOutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\StockManagementSystem.Models.Category.datasource" />
+    <None Include="Properties\DataSources\StockManagementSystem.Models.Companny.datasource" />
+    <None Include="Properties\DataSources\StockManagementSystem.Models.Item.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

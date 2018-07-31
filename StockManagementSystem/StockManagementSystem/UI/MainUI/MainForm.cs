@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using StockManagementSystem.UI.Category;
+using StockManagementSystem.UI.CategoryUI;
 using StockManagementSystem.UI.Company;
 using StockManagementSystem.UI.DateSearch;
 using StockManagementSystem.UI.ItemSetup;
