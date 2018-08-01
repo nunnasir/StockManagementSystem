@@ -92,7 +92,6 @@
             this.companyComboBox.Name = "companyComboBox";
             this.companyComboBox.Size = new System.Drawing.Size(274, 21);
             this.companyComboBox.TabIndex = 1;
-            this.companyComboBox.Text = "--Select Company--";
             this.companyComboBox.ValueMember = "Id";
             // 
             // compannyBindingSource
@@ -184,6 +183,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Name = "ItemSetupForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Item Setup";
             this.Load += new System.EventHandler(this.ItemSetupForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).EndInit();

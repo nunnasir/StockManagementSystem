@@ -120,6 +120,7 @@
             this.Controls.Add(this.ItemButton);
             this.Controls.Add(this.CategoryButton);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home";
             this.ResumeLayout(false);
 

@@ -29,7 +29,8 @@ namespace StockManagementSystem.UI.ItemSetup
         {
             DataTable companydt = new DataTable();
             companydt = itemRepository.LoadCompany();
-            companyComboBox.DataSource = companydt;
+            compannyBindingSource.DataSource = companydt;
+            //companyComboBox.DataSource = companydt;
 
             companyComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             companyComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;

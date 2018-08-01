@@ -31,10 +31,10 @@
             this.categoryErrorLabel = new System.Windows.Forms.Label();
             this.UpdateButton = new System.Windows.Forms.Button();
             this.companyDataGridView = new System.Windows.Forms.DataGridView();
+            this.CompanyGridName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SaveButton = new System.Windows.Forms.Button();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.CompanyGridName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.companyDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,6 +74,13 @@
             this.companyDataGridView.TabIndex = 9;
             this.companyDataGridView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.companyDataGridView_MouseDoubleClick);
             // 
+            // CompanyGridName
+            // 
+            this.CompanyGridName.DataPropertyName = "Name";
+            this.CompanyGridName.HeaderText = "Name";
+            this.CompanyGridName.Name = "CompanyGridName";
+            this.CompanyGridName.ReadOnly = true;
+            // 
             // SaveButton
             // 
             this.SaveButton.Location = new System.Drawing.Point(369, 86);
@@ -102,13 +109,6 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Name";
             // 
-            // CompanyGridName
-            // 
-            this.CompanyGridName.DataPropertyName = "Name";
-            this.CompanyGridName.HeaderText = "Name";
-            this.CompanyGridName.Name = "CompanyGridName";
-            this.CompanyGridName.ReadOnly = true;
-            // 
             // CompanyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -121,6 +121,7 @@
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.label1);
             this.Name = "CompanyForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Companny Setup";
             this.Load += new System.EventHandler(this.CompanyForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.companyDataGridView)).EndInit();

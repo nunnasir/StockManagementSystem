@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using StockManagementSystem.UI.CategoryUI;
 using StockManagementSystem.UI.Company;
-using StockManagementSystem.UI.DateSearch;
+using StockManagementSystem.UI.DateSearchUI;
 using StockManagementSystem.UI.ItemSetup;
-using StockManagementSystem.UI.Search;
-using StockManagementSystem.UI.StockIn;
+using StockManagementSystem.UI.SearchUI;
+using StockManagementSystem.UI.StockInUI;
 using StockManagementSystem.UI.StockOut;
 
 namespace StockManagementSystem.UI.MainForm
