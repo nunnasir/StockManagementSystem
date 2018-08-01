@@ -3,7 +3,6 @@ using System.Data;
 using System.Windows.Forms;
 using StockManagementSystem.Models;
 using StockManagementSystem.DAL;
-using StockManagementSystem.BLL;
 
 namespace StockManagementSystem.UI.SearchUI
 {
@@ -16,7 +15,6 @@ namespace StockManagementSystem.UI.SearchUI
 
         Search search = new Search();
         SearchRepository searchRepository = new SearchRepository();
-        SearchManager searchManager = new SearchManager();
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -44,8 +42,6 @@ namespace StockManagementSystem.UI.SearchUI
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            //search.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
-            //search.Category = categoryComboBox.GetItemText(categoryComboBox.SelectedItem);
             search.CompanyId = Convert.ToInt32(companyComboBox.SelectedValue);
             search.CategoryId = Convert.ToInt32(categoryComboBox.SelectedValue);
 

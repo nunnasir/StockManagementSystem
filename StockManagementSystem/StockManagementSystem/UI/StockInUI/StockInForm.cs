@@ -27,7 +27,7 @@ namespace StockManagementSystem.UI.StockInUI
         Stockin stockin = new Stockin();
         StockinRepository stockinRepository = new StockinRepository();
         StockinManager stockinManager = new StockinManager();
-
+        Connection connection = new Connection();
 
         private void StockInForm_Load(object sender, EventArgs e)
         {
@@ -74,8 +74,7 @@ namespace StockManagementSystem.UI.StockInUI
             stockin.CategoryId = Convert.ToInt32(categoryComboBox.SelectedValue);
             stockin.CompanyId = Convert.ToInt32(companyComboBox.SelectedValue);
 
-            string constring = "server = DESKTOP-E1SJ59O; database = StockManagement; integrated security = true;";
-            SqlConnection conn = new SqlConnection(constring);
+            SqlConnection conn = new SqlConnection(connection.connectionDb);
             string query = @"select iv.Quantity, iv.Reorder from Items it inner join Inventory iv on it.Id = iv.itemId where it.CategoryId = "+stockin.CategoryId+" and it.CompanyId = "+stockin.CompanyId+" and it.Id = "+stockin.Id+"   ";
             SqlCommand command = new SqlCommand(query,conn);
             conn.Open();

@@ -13,7 +13,7 @@ using StockManagementSystem.UI.DateSearchUI;
 using StockManagementSystem.UI.ItemSetup;
 using StockManagementSystem.UI.SearchUI;
 using StockManagementSystem.UI.StockInUI;
-using StockManagementSystem.UI.StockOut;
+using StockManagementSystem.UI.StockOutUI;
 
 namespace StockManagementSystem.UI.MainForm
 {

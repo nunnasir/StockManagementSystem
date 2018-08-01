@@ -57,6 +57,7 @@
     <Compile Include="DAL\LoginRepository.cs" />
     <Compile Include="DAL\SearchRepository.cs" />
     <Compile Include="DAL\StockinRepository.cs" />
+    <Compile Include="DAL\StockOutRepository.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Companny.cs" />
     <Compile Include="Models\Connection.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\Stockin.cs" />
+    <Compile Include="Models\StockOut.cs" />
     <Compile Include="UI\CategoryUI\CategoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,10 +117,10 @@
     <Compile Include="UI\StockInUI\StockInForm.Designer.cs">
       <DependentUpon>StockInForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\StockOut\StockOutForm.cs">
+    <Compile Include="UI\StockOutUI\StockOutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\StockOut\StockOutForm.Designer.cs">
+    <Compile Include="UI\StockOutUI\StockOutForm.Designer.cs">
       <DependentUpon>StockOutForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="UI\CategoryUI\CategoryForm.resx">
@@ -154,7 +156,7 @@
     <EmbeddedResource Include="UI\StockInUI\StockInForm.resx">
       <DependentUpon>StockInForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\StockOut\StockOutForm.resx">
+    <EmbeddedResource Include="UI\StockOutUI\StockOutForm.resx">
       <DependentUpon>StockOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\DataSources\StockManagementSystem.Models.Category.datasource" />

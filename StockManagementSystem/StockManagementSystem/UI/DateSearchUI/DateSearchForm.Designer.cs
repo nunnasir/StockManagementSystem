@@ -101,11 +101,11 @@
             // 
             // DateSearchGridItem
             // 
+            this.DateSearchGridItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DateSearchGridItem.DataPropertyName = "ItemName";
             this.DateSearchGridItem.HeaderText = "Item";
             this.DateSearchGridItem.Name = "DateSearchGridItem";
             this.DateSearchGridItem.ReadOnly = true;
-            this.DateSearchGridItem.Width = 535;
             // 
             // DateSearchGridQuantity
             // 
