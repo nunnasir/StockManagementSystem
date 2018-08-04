@@ -49,6 +49,7 @@
     <Compile Include="BLL\ItemManagement.cs" />
     <Compile Include="BLL\LoginManager.cs" />
     <Compile Include="BLL\SearchManager.cs" />
+    <Compile Include="BLL\StockoutManager.cs" />
     <Compile Include="BLL\StockinManager.cs" />
     <Compile Include="DAL\CategoryRepository.cs" />
     <Compile Include="DAL\CompanyRepository.cs" />
@@ -63,10 +64,12 @@
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\DateSearch.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ItemVM.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\Stockin.cs" />
     <Compile Include="Models\StockOut.cs" />
+    <Compile Include="Models\StockOutVM.cs" />
     <Compile Include="UI\CategoryUI\CategoryForm.cs">
       <SubType>Form</SubType>
     </Compile>

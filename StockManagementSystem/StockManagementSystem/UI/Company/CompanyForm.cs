@@ -24,10 +24,12 @@ namespace StockManagementSystem.UI.Company
         CompanyManagement companyManagement = new CompanyManagement();
         CompanyRepository companyRepository = new CompanyRepository();
 
-
-        private void nameTextBox_TextChanged(object sender, EventArgs e)
+        //Save Company
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             companny.Name = nameTextBox.Text;
+            companny.ErrorText = categoryErrorLabel.Text;
+
             bool isExist = companyManagement.IsExisted(companny);
             if (isExist)
             {
@@ -35,13 +37,6 @@ namespace StockManagementSystem.UI.Company
                 return;
             }
             categoryErrorLabel.Text = "";
-        }
-
-        //Save Company
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            companny.Name = nameTextBox.Text;
-            companny.ErrorText = categoryErrorLabel.Text;
 
             bool verify = companyManagement.IsVerified(companny);
             if (verify)
@@ -50,12 +45,6 @@ namespace StockManagementSystem.UI.Company
                 return;
             }
 
-            bool error = companyManagement.IsError(companny);
-            if (error)
-            {
-                MessageBox.Show("Please Resolve Your Error!!");
-                return;
-            }
 
             bool isAdd = companyManagement.IsAdded(companny);
             if (isAdd)
@@ -89,6 +78,14 @@ namespace StockManagementSystem.UI.Company
                 MessageBox.Show("Field Must Not Be Empty!!");
                 return;
             }
+
+            bool isExist = companyManagement.IsExisted(companny);
+            if (isExist)
+            {
+                categoryErrorLabel.Text = "* This Company Already Existed!!";
+                return;
+            }
+            categoryErrorLabel.Text = "";
 
             bool isUpdate = companyManagement.IsUpdated(companny);
             if (isUpdate)

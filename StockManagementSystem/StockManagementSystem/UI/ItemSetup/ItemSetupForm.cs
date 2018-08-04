@@ -43,17 +43,6 @@ namespace StockManagementSystem.UI.ItemSetup
             categoryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
-        private void nameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            item.Name = nameTextBox.Text;
-            bool isExist = itemManagement.IsExisted(item);
-            if (isExist)
-            {
-                itemErrorLabel.Text = "* This Item Already Existed!!";
-                return;
-            }
-            itemErrorLabel.Text = "";
-        }
 
         private void reorderTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -78,13 +67,21 @@ namespace StockManagementSystem.UI.ItemSetup
             reorderErrorLabel.Text = "";
         }
 
+        List<ItemVM> disItemVms = new List<ItemVM>();
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            ItemVM itemVm = new ItemVM();
+
             item.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
             item.Category = categoryComboBox.GetItemText(categoryComboBox.SelectedItem);
             item.Name = nameTextBox.Text;
             item.ErrorText = itemErrorLabel.Text;
             item.ReorderError = reorderErrorLabel.Text;
+
+            itemVm.Name = nameTextBox.Text;
+            itemVm.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
+            itemVm.Category = categoryComboBox.GetItemText(categoryComboBox.SelectedItem);
+            itemVm.Reorder = Convert.ToInt32(reorderTextBox.Text);
 
             bool verify = itemManagement.IsVerified(item);
             if (verify)
@@ -107,15 +104,30 @@ namespace StockManagementSystem.UI.ItemSetup
             }
             item.Reorder = Convert.ToInt32(reorderTextBox.Text);
 
+            //Check Existing Item
+            bool isExist = itemManagement.IsExisted(item);
+            if (isExist)
+            {
+                itemErrorLabel.Text = "* This Item Already Existed!!";
+                return;
+            }
+            itemErrorLabel.Text = "";
+
+            disItemVms.Add(itemVm);
+
             bool isAdd = itemManagement.IsAdded(item);
             if (isAdd)
             {
                 MessageBox.Show("New Item Successfully Add!!");
                 nameTextBox.Clear();
                 reorderTextBox.Clear();
-                //companyComboBox.Items.Clear();
-                //categoryComboBox.Items.Clear();
+                reorderErrorLabel.Text = "";
             }
+
+            //Add Gridview
+            itemDataGridView.DataSource = null;
+            itemDataGridView.DataSource = disItemVms;
+            //stockOutDataGridView.Columns["ItemId"].Visible = false;
 
         }
 
@@ -126,7 +138,6 @@ namespace StockManagementSystem.UI.ItemSetup
             this.Hide();
             mainForm.Show();
         }
-
         
     }
 }

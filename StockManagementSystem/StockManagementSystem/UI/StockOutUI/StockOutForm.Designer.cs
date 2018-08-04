@@ -55,6 +55,8 @@
             this.DamageButton = new System.Windows.Forms.Button();
             this.SellButton = new System.Windows.Forms.Button();
             this.LostButton = new System.Windows.Forms.Button();
+            this.errorQuantityLabel = new System.Windows.Forms.Label();
+            this.ReorderErrorLavel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.compannyBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).BeginInit();
@@ -246,18 +248,21 @@
             // 
             // stockoutgridItem
             // 
+            this.stockoutgridItem.DataPropertyName = "ItemName";
             this.stockoutgridItem.HeaderText = "Item";
             this.stockoutgridItem.Name = "stockoutgridItem";
             this.stockoutgridItem.ReadOnly = true;
             // 
             // stockoutgridcompany
             // 
+            this.stockoutgridcompany.DataPropertyName = "CompanyName";
             this.stockoutgridcompany.HeaderText = "Company";
             this.stockoutgridcompany.Name = "stockoutgridcompany";
             this.stockoutgridcompany.ReadOnly = true;
             // 
             // stockoutgridquantity
             // 
+            this.stockoutgridquantity.DataPropertyName = "StockOutQuantity";
             this.stockoutgridquantity.HeaderText = "Quantity";
             this.stockoutgridquantity.Name = "stockoutgridquantity";
             this.stockoutgridquantity.ReadOnly = true;
@@ -292,11 +297,31 @@
             this.LostButton.UseVisualStyleBackColor = true;
             this.LostButton.Click += new System.EventHandler(this.LostButton_Click);
             // 
+            // errorQuantityLabel
+            // 
+            this.errorQuantityLabel.AutoSize = true;
+            this.errorQuantityLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorQuantityLabel.Location = new System.Drawing.Point(577, 158);
+            this.errorQuantityLabel.Name = "errorQuantityLabel";
+            this.errorQuantityLabel.Size = new System.Drawing.Size(0, 13);
+            this.errorQuantityLabel.TabIndex = 30;
+            // 
+            // ReorderErrorLavel
+            // 
+            this.ReorderErrorLavel.AutoSize = true;
+            this.ReorderErrorLavel.ForeColor = System.Drawing.Color.Red;
+            this.ReorderErrorLavel.Location = new System.Drawing.Point(574, 129);
+            this.ReorderErrorLavel.Name = "ReorderErrorLavel";
+            this.ReorderErrorLavel.Size = new System.Drawing.Size(0, 13);
+            this.ReorderErrorLavel.TabIndex = 31;
+            // 
             // StockOutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 420);
+            this.Controls.Add(this.ReorderErrorLavel);
+            this.Controls.Add(this.errorQuantityLabel);
             this.Controls.Add(this.stockOutDataGridView);
             this.Controls.Add(this.SellButton);
             this.Controls.Add(this.LostButton);
@@ -358,5 +383,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridcompany;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridquantity;
+        private System.Windows.Forms.Label errorQuantityLabel;
+        private System.Windows.Forms.Label ReorderErrorLavel;
     }
 }

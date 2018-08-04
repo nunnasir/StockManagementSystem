@@ -83,6 +83,14 @@ namespace StockManagementSystem.UI.StockInUI
             {
                 availableTextBox.Text = dr.GetValue(0).ToString();
                 reorderTextBox.Text = dr.GetValue(1).ToString();
+                if (Convert.ToInt32(availableTextBox.Text) < Convert.ToInt32(reorderTextBox.Text))
+                {
+                    ReorderErrorLavel.Text = "*Items are Below Reorder Level";
+                }
+                else
+                {
+                    ReorderErrorLavel.Text = "";
+                }
             }
             else
             {
@@ -124,11 +132,14 @@ namespace StockManagementSystem.UI.StockInUI
                 stockQuantityTextBox.Clear();
                 availableTextBox.Clear();
                 reorderTextBox.Clear();
+                stockQuantityLabel.Text = "";
+                itemComboBox.ResetText();
             }
         }
 
         private void stockQuantityTextBox_TextChanged(object sender, EventArgs e)
         {
+
             string temp = stockQuantityTextBox.Text;
             foreach (char c in temp)
             {
@@ -149,6 +160,6 @@ namespace StockManagementSystem.UI.StockInUI
 
             stockQuantityLabel.Text = "";
         }
-      
+
     }
 }

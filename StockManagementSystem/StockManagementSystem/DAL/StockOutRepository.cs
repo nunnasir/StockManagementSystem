@@ -54,5 +54,19 @@ namespace StockManagementSystem.DAL
             conn.Close();
             return dt;
         }
+
+        public bool SalesAdd(StockOut stockOut)
+        {
+            SqlConnection conn = new SqlConnection(connection.connectionDb);
+            string query = @"UPDATE Inventory SET Quantity = (SELECT Quantity FROM Inventory WHERE ItemId = " + stockOut.Id + ") - " + stockOut.SOQuantity + " WHERE ItemId = " + stockOut.Id + " ";
+            string insertQuery = @"INSERT INTO StockOut VALUES(" + stockOut.Id + ", " + stockOut.SOQuantity + ", 1, GETDATE())";
+            SqlCommand upCommand = new SqlCommand(query, conn);
+            SqlCommand insCommand = new SqlCommand(insertQuery, conn);
+            conn.Open();
+            bool isRowAffected = upCommand.ExecuteNonQuery() > 0 && insCommand.ExecuteNonQuery() > 0;
+            conn.Close();
+            return isRowAffected;
+        }
+
     }
 }

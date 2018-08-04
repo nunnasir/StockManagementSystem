@@ -42,7 +42,7 @@ namespace StockManagementSystem.DAL
         public DataTable AddCategory()
         {
             SqlConnection conn = new SqlConnection(connection.connectionDb);
-            string selectQuery = @"SELECT Name FROM Category";
+            string selectQuery = @"SELECT Name FROM Category ORDER BY Id DESC";
             SqlCommand selectCommand = new SqlCommand(selectQuery, conn);
             conn.Open();
             SqlDataReader sd = selectCommand.ExecuteReader();

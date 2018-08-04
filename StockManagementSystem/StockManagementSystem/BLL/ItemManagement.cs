@@ -35,7 +35,7 @@ namespace StockManagementSystem.BLL
         //Check Error
         public bool IsError(Item item)
         {
-            if (!(string.IsNullOrEmpty(item.ErrorText)) || !(string.IsNullOrEmpty(item.ReorderError)))
+            if (!(string.IsNullOrEmpty(item.ReorderError)))
             {
                 return true;
             }

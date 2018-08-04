@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using StockManagementSystem.Models;
 using StockManagementSystem.DAL;
+using StockManagementSystem.BLL;
 
 namespace StockManagementSystem.UI.StockOutUI
 {
@@ -17,6 +18,7 @@ namespace StockManagementSystem.UI.StockOutUI
 
         StockOut stockOut = new StockOut();
         StockOutRepository stockOutRepository = new StockOutRepository();
+        StockoutManager stockoutManager = new StockoutManager();
         Connection connection = new Connection();
 
         private void StockOutForm_Load(object sender, EventArgs e)
@@ -73,6 +75,15 @@ namespace StockManagementSystem.UI.StockOutUI
             {
                 availableTextBox.Text = dr.GetValue(0).ToString();
                 reorderTextBox.Text = dr.GetValue(1).ToString();
+
+                if (Convert.ToInt32(availableTextBox.Text) < Convert.ToInt32(reorderTextBox.Text))
+                {
+                    ReorderErrorLavel.Text = "*Items are Below Reorder Level";
+                }
+                else
+                {
+                    ReorderErrorLavel.Text = "";
+                }
             }
             else
             {
@@ -83,104 +94,169 @@ namespace StockManagementSystem.UI.StockOutUI
             conn.Close();
         }
 
-        //List<StockOut> stockoutsiList = new List<StockOut>();
+        List<StockOut> stockoutsiList = new List<StockOut>();
+        List<StockOutVM> stockOutDisplayList = new List<StockOutVM>();
+
         private void AddButton_Click(object sender, EventArgs e)
         {
+            StockOutVM stockOutVm = new StockOutVM();
 
             stockOut.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
+            stockOut.Category = categoryComboBox.GetItemText(companyComboBox.SelectedItem);
             stockOut.Item = itemComboBox.GetItemText(itemComboBox.SelectedItem);
             stockOut.SOQuantity = stockQuantityTextBox.Text;
+            stockOut.Reorder = Convert.ToInt32(reorderTextBox.Text);
 
-            int n = stockOutDataGridView.Rows.Add();
-            stockOutDataGridView.Rows[n].Cells[0].Value = stockOut.Item;
-            stockOutDataGridView.Rows[n].Cells[1].Value = stockOut.Company;
-            stockOutDataGridView.Rows[n].Cells[2].Value = stockOut.SOQuantity;
+            stockOutVm.ItemId = Convert.ToInt32(itemComboBox.SelectedValue);
+            stockOutVm.CompanyName = companyComboBox.GetItemText(companyComboBox.SelectedItem);
+            stockOutVm.ItemName = itemComboBox.GetItemText(itemComboBox.SelectedItem);
+            stockOutVm.StockOutQuantity = stockQuantityTextBox.Text;
+
+
+            //Check Quantity
+            SqlConnection conn = new SqlConnection(connection.connectionDb);
+            string query = @"select * from Inventory where Quantity >= "+stockOutVm.StockOutQuantity+" AND ItemId = "+stockOutVm.ItemId+" ";
+            SqlCommand command = new SqlCommand(query,conn);
+            conn.Open();
+            bool isRowAffected = command.ExecuteNonQuery() > 0;
+            conn.Close();
+            if (!isRowAffected)
+            {
+                errorQuantityLabel.Text = "Unavailable quantity";
+                return;
+            }
+
+
+            //Add List
+            stockoutsiList.Add(stockOut);
+            stockOutDisplayList.Add(stockOutVm);
+
+            //Add Gridview
+            stockOutDataGridView.DataSource = null;
+            stockOutDataGridView.DataSource = stockOutDisplayList;
+            stockOutDataGridView.Columns["ItemId"].Visible = false;
 
             stockQuantityTextBox.Clear();
+            reorderTextBox.Clear();
+            availableTextBox.Clear();
+            itemComboBox.ResetText();
 
         }
 
+        //Stockout by Sell
         private void SellButton_Click(object sender, EventArgs e)
         {
-            List<string> updateStockList = new List<string>();
-
-            for (int i = 0; i < stockOutDataGridView.Rows.Count; i++)
+            if (stockOutDisplayList.Count > 0)
             {
-                updateStockList.Add(stockOutDataGridView.Rows[i].Cells[0].ToString());
-            }
-
-            if (updateStockList.Count > 0)
-            {
-                SqlConnection conn = new SqlConnection(connection.connectionDb);
-                string query = @"UPDATE Inventory SET Quantity = (SELECT Quantity FROM Inventory WHERE ItemId = " + stockOut.Id + ") - " + stockOut.SOQuantity + " WHERE ItemId = " + stockOut.Id + " ";
-                string insertQuery = @"INSERT INTO StockOut VALUES(" + stockOut.Id + ", " + stockOut.SOQuantity + ", 1, GETDATE())";
-                SqlCommand upCommand = new SqlCommand(query, conn);
-                SqlCommand insCommand = new SqlCommand(insertQuery, conn);
-                conn.Open();
-                bool isRowAffected = upCommand.ExecuteNonQuery() > 0 && insCommand.ExecuteNonQuery() > 0;
-                if (isRowAffected)
+                int uc = 0;
+                int ic = 0;
+                foreach (var outVm in stockOutDisplayList)
                 {
-                    MessageBox.Show("Stock Out Successfully!!");
-                    stockOutDataGridView.Rows.Clear();
+                    SqlConnection conn = new SqlConnection(connection.connectionDb);
+                    string query = @"UPDATE Inventory SET Quantity = (SELECT Quantity FROM Inventory WHERE ItemId = " + outVm.ItemId + ") - " + outVm.StockOutQuantity + " WHERE ItemId = " + outVm.ItemId + " ";
+                    string insertQuery = @"INSERT INTO StockOut VALUES(" + outVm.ItemId + ", " + outVm.StockOutQuantity + ", 1, GETDATE())";
+
+                    SqlCommand upCommand = new SqlCommand(query, conn);
+                    SqlCommand insCommand = new SqlCommand(insertQuery, conn);
+                    conn.Open();
+                    uc += upCommand.ExecuteNonQuery();
+                    ic += insCommand.ExecuteNonQuery();
+                    conn.Close();
                 }
-                conn.Close();
+
+                if (uc == ic)
+                {
+                    MessageBox.Show("SuccessFully Stockout by Sell");
+                    stockOutDisplayList.Clear();
+                    stockOutDataGridView.DataSource = null;
+                }
+                else
+                {
+                    MessageBox.Show("There is an error!!");
+                }
             }
+            else
+            {
+                MessageBox.Show("There is no any selected Item!!");
+            }
+
         }
 
+        //Stockout by Damage
         private void DamageButton_Click(object sender, EventArgs e)
         {
-            List<string> updateStockList = new List<string>();
-
-            for (int i = 0; i < stockOutDataGridView.Rows.Count; i++)
+            if (stockOutDisplayList.Count > 0)
             {
-                updateStockList.Add(stockOutDataGridView.Rows[i].Cells[0].ToString());
-            }
-
-            if (updateStockList.Count > 0)
-            {
-                SqlConnection conn = new SqlConnection(connection.connectionDb);
-                string query = @"UPDATE Inventory SET Quantity = (SELECT Quantity FROM Inventory WHERE ItemId = " + stockOut.Id + ") - " + stockOut.SOQuantity + " WHERE ItemId = " + stockOut.Id + " ";
-                string insertQuery = @"INSERT INTO StockOut VALUES(" + stockOut.Id + ", " + stockOut.SOQuantity + ", 2, GETDATE())";
-                SqlCommand upCommand = new SqlCommand(query, conn);
-                SqlCommand insCommand = new SqlCommand(insertQuery, conn);
-                conn.Open();
-                bool isRowAffected = upCommand.ExecuteNonQuery() > 0 && insCommand.ExecuteNonQuery() > 0;
-                if (isRowAffected)
+                int uc = 0;
+                int ic = 0;
+                foreach (var outVm in stockOutDisplayList)
                 {
-                    MessageBox.Show("Stock Out Successfully!!");
-                    stockOutDataGridView.Rows.Clear();
+                    SqlConnection conn = new SqlConnection(connection.connectionDb);
+                    string query = @"UPDATE Inventory SET Quantity = (SELECT Quantity FROM Inventory WHERE ItemId = " + outVm.ItemId + ") - " + outVm.StockOutQuantity + " WHERE ItemId = " + outVm.ItemId + " ";
+                    string insertQuery = @"INSERT INTO StockOut VALUES(" + outVm.ItemId + ", " + outVm.StockOutQuantity + ", 2, GETDATE())";
+
+                    SqlCommand upCommand = new SqlCommand(query, conn);
+                    SqlCommand insCommand = new SqlCommand(insertQuery, conn);
+                    conn.Open();
+                    uc += upCommand.ExecuteNonQuery();
+                    ic += insCommand.ExecuteNonQuery();
+                    conn.Close();
                 }
-                conn.Close();
+
+                if (uc == ic)
+                {
+                    MessageBox.Show("SuccessFully Stockout by Damage");
+                    stockOutDisplayList.Clear();
+                    stockOutDataGridView.DataSource = null;
+                }
+                else
+                {
+                    MessageBox.Show("There is an error!!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no any selected Item!!");
             }
         }
 
+        //Stockout by lost
         private void LostButton_Click(object sender, EventArgs e)
         {
-            List<string> updateStockList = new List<string>();
-
-            for (int i = 0; i < stockOutDataGridView.Rows.Count; i++)
+            if (stockOutDisplayList.Count > 0)
             {
-                updateStockList.Add(stockOutDataGridView.Rows[i].Cells[0].ToString());
-            }
-
-            if (updateStockList.Count > 0)
-            {
-                SqlConnection conn = new SqlConnection(connection.connectionDb);
-                string query = @"UPDATE Inventory SET Quantity = (SELECT Quantity FROM Inventory WHERE ItemId = " + stockOut.Id + ") - " + stockOut.SOQuantity + " WHERE ItemId = " + stockOut.Id + " ";
-                string insertQuery = @"INSERT INTO StockOut VALUES(" + stockOut.Id + ", " + stockOut.SOQuantity + ", 3, GETDATE())";
-                SqlCommand upCommand = new SqlCommand(query, conn);
-                SqlCommand insCommand = new SqlCommand(insertQuery, conn);
-                conn.Open();
-                bool isRowAffected = upCommand.ExecuteNonQuery() > 0 && insCommand.ExecuteNonQuery() > 0;
-                if (isRowAffected)
+                int uc = 0;
+                int ic = 0;
+                foreach (var outVm in stockOutDisplayList)
                 {
-                    MessageBox.Show("Stock Out Successfully!!");
-                    stockOutDataGridView.Rows.Clear();
+                    SqlConnection conn = new SqlConnection(connection.connectionDb);
+                    string query = @"UPDATE Inventory SET Quantity = (SELECT Quantity FROM Inventory WHERE ItemId = " + outVm.ItemId + ") - " + outVm.StockOutQuantity + " WHERE ItemId = " + outVm.ItemId + " ";
+                    string insertQuery = @"INSERT INTO StockOut VALUES(" + outVm.ItemId + ", " + outVm.StockOutQuantity + ", 3, GETDATE())";
+
+                    SqlCommand upCommand = new SqlCommand(query, conn);
+                    SqlCommand insCommand = new SqlCommand(insertQuery, conn);
+                    conn.Open();
+                    uc += upCommand.ExecuteNonQuery();
+                    ic += insCommand.ExecuteNonQuery();
+                    conn.Close();
                 }
-                conn.Close();
+
+                if (uc == ic)
+                {
+                    MessageBox.Show("SuccessFully Stockout by Lost");
+                    stockOutDisplayList.Clear();
+                    stockOutDataGridView.DataSource = null;
+                }
+                else
+                {
+                    MessageBox.Show("There is an error!!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no any selected Item!!");
             }
         }
-
         
     }
 }

@@ -50,6 +50,7 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.stockinBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.stockQuantityLabel = new System.Windows.Forms.Label();
+            this.ReorderErrorLavel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.compannyBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemBindingSource)).BeginInit();
@@ -237,11 +238,21 @@
             this.stockQuantityLabel.Size = new System.Drawing.Size(0, 13);
             this.stockQuantityLabel.TabIndex = 13;
             // 
+            // ReorderErrorLavel
+            // 
+            this.ReorderErrorLavel.AutoSize = true;
+            this.ReorderErrorLavel.ForeColor = System.Drawing.Color.Red;
+            this.ReorderErrorLavel.Location = new System.Drawing.Point(583, 174);
+            this.ReorderErrorLavel.Name = "ReorderErrorLavel";
+            this.ReorderErrorLavel.Size = new System.Drawing.Size(0, 13);
+            this.ReorderErrorLavel.TabIndex = 14;
+            // 
             // StockInForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 351);
+            this.Controls.Add(this.ReorderErrorLavel);
             this.Controls.Add(this.stockQuantityLabel);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.label7);
@@ -295,5 +306,6 @@
         private System.Windows.Forms.BindingSource compannyBindingSource;
         private System.Windows.Forms.BindingSource categoryBindingSource;
         private System.Windows.Forms.Label stockQuantityLabel;
+        private System.Windows.Forms.Label ReorderErrorLavel;
     }
 }

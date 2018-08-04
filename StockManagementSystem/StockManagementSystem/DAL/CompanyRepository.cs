@@ -41,7 +41,7 @@ namespace StockManagementSystem.DAL
         public DataTable AddCompany()
         {
             SqlConnection conn = new SqlConnection(connection.connectionDb);
-            string selectQuery = @"SELECT Name FROM Company";
+            string selectQuery = @"SELECT Name FROM Company ORDER BY Id DESC";
             SqlCommand selectCommand = new SqlCommand(selectQuery, conn);
             conn.Open();
             SqlDataReader sd = selectCommand.ExecuteReader();

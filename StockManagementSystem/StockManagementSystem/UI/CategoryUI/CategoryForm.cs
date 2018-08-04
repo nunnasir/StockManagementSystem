@@ -27,9 +27,12 @@ namespace StockManagementSystem.UI.CategoryUI
         CategoryRepository categoryRepository = new CategoryRepository();
 
 
-        private void nameTextBox_TextChanged(object sender, EventArgs e)
+        //Save Category
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             category.Name = nameTextBox.Text;
+            category.ErrorText = categoryErrorLabel.Text;
+
             bool isExist = categoryManagement.IsExisted(category);
             if (isExist)
             {
@@ -37,26 +40,11 @@ namespace StockManagementSystem.UI.CategoryUI
                 return;
             }
             categoryErrorLabel.Text = "";
-        }
-
-        //Save Category
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            category.Name = nameTextBox.Text;
-            category.ErrorText = categoryErrorLabel.Text;
 
             bool verify = categoryManagement.IsVerified(category);
             if (verify)
             {
                 MessageBox.Show("Field Must Not Be Empty!!");
-                return;
-            }
-            
-
-            bool error = categoryManagement.IsError(category);
-            if (error)
-            {
-                MessageBox.Show("Please Resolve Your Error!!");
                 return;
             }
             
@@ -95,6 +83,14 @@ namespace StockManagementSystem.UI.CategoryUI
                 MessageBox.Show("Field Must Not Be Empty!!");
                 return;
             }
+
+            bool isExist = categoryManagement.IsExisted(category);
+            if (isExist)
+            {
+                categoryErrorLabel.Text = "* This Categerory Already Existed!!";
+                return;
+            }
+            categoryErrorLabel.Text = "";
 
             bool isUpdate = categoryManagement.IsUpdated(category);
             if (isUpdate)

@@ -17,6 +17,7 @@ namespace StockManagementSystem.Models
         public int CategoryId { get; set; }
         public int CompanyId { get; set; }
         public string ErrorText { get; set; }
+        public int Reorder { get; set; }
 
 
     }
