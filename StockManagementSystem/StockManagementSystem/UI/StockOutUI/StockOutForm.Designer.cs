@@ -57,6 +57,7 @@
             this.LostButton = new System.Windows.Forms.Button();
             this.errorQuantityLabel = new System.Windows.Forms.Label();
             this.ReorderErrorLavel = new System.Windows.Forms.Label();
+            this.selectItemErrorLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.compannyBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).BeginInit();
@@ -314,11 +315,21 @@
             this.ReorderErrorLavel.Size = new System.Drawing.Size(0, 13);
             this.ReorderErrorLavel.TabIndex = 31;
             // 
+            // selectItemErrorLabel
+            // 
+            this.selectItemErrorLabel.AutoSize = true;
+            this.selectItemErrorLabel.ForeColor = System.Drawing.Color.Red;
+            this.selectItemErrorLabel.Location = new System.Drawing.Point(576, 73);
+            this.selectItemErrorLabel.Name = "selectItemErrorLabel";
+            this.selectItemErrorLabel.Size = new System.Drawing.Size(0, 13);
+            this.selectItemErrorLabel.TabIndex = 32;
+            // 
             // StockOutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 420);
+            this.Controls.Add(this.selectItemErrorLabel);
             this.Controls.Add(this.ReorderErrorLavel);
             this.Controls.Add(this.errorQuantityLabel);
             this.Controls.Add(this.stockOutDataGridView);
@@ -384,5 +395,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridcompany;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridquantity;
+        private System.Windows.Forms.Label selectItemErrorLabel;
     }
 }

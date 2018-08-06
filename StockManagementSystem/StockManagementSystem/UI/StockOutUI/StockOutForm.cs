@@ -118,17 +118,25 @@ namespace StockManagementSystem.UI.StockOutUI
         {
             StockOutVM stockOutVm = new StockOutVM();
 
-            int avQuantity = Convert.ToInt32(availableTextBox.Text);
+            string avQuantity = availableTextBox.Text;
             stockOut.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
             stockOut.Category = categoryComboBox.GetItemText(companyComboBox.SelectedItem);
             stockOut.Item = itemComboBox.GetItemText(itemComboBox.SelectedItem);
             stockOut.SOQuantity = stockQuantityTextBox.Text;
-            stockOut.Reorder = Convert.ToInt32(reorderTextBox.Text);
+            stockOut.Reorder = reorderTextBox.Text;
 
             stockOutVm.ItemId = Convert.ToInt32(itemComboBox.SelectedValue);
             stockOutVm.CompanyName = companyComboBox.GetItemText(companyComboBox.SelectedItem);
             stockOutVm.ItemName = itemComboBox.GetItemText(itemComboBox.SelectedItem);
             stockOutVm.StockOutQuantity = stockQuantityTextBox.Text;
+
+            if (string.IsNullOrEmpty(stockOut.Item) || string.IsNullOrEmpty(avQuantity) || string.IsNullOrEmpty(stockOut.Reorder))
+            {
+                selectItemErrorLabel.Text = "*Please Select Item";
+                return;
+            }
+
+            selectItemErrorLabel.Text = "";
 
             if (string.IsNullOrEmpty(stockQuantityTextBox.Text))
             {
@@ -137,7 +145,7 @@ namespace StockManagementSystem.UI.StockOutUI
                 return;
             }
 
-            if (avQuantity < Convert.ToInt32(stockOut.SOQuantity))
+            if (Convert.ToInt32(avQuantity) < Convert.ToInt32(stockOut.SOQuantity))
             {
                 errorQuantityLabel.Text = "*sorry unavailable Items!!";
                 return;
@@ -276,7 +284,6 @@ namespace StockManagementSystem.UI.StockOutUI
                 MessageBox.Show("There is no any selected Item!!");
             }
         }
-
 
 
     }
