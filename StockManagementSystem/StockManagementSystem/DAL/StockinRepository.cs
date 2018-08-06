@@ -59,7 +59,7 @@ namespace StockManagementSystem.DAL
         public bool IsAdd(Stockin stockin)
         {
             SqlConnection conn = new SqlConnection(connection.connectionDb);
-            string query = @"update Inventory set Quantity = (select Quantity from Inventory Where ItemId = (Select Id from Items where name = '" + stockin.Item + "') ) + 10 Where ItemId = (Select Id from Items where name = '" + stockin.Item + "')";
+            string query = @"update Inventory set Quantity = (select Quantity from Inventory Where ItemId = (Select Id from Items where name = '" + stockin.Item + "') ) + "+stockin.SIQuantity+" Where ItemId = (Select Id from Items where name = '" + stockin.Item + "')";
             SqlCommand command = new SqlCommand(query, conn);
             conn.Open();
             bool isRowAffected = command.ExecuteNonQuery() > 0;

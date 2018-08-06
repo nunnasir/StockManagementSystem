@@ -77,11 +77,12 @@ namespace StockManagementSystem.UI.ItemSetup
             item.Name = nameTextBox.Text;
             item.ErrorText = itemErrorLabel.Text;
             item.ReorderError = reorderErrorLabel.Text;
+            item.Reorder = reorderTextBox.Text;
 
             itemVm.Name = nameTextBox.Text;
             itemVm.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
             itemVm.Category = categoryComboBox.GetItemText(categoryComboBox.SelectedItem);
-            itemVm.Reorder = Convert.ToInt32(reorderTextBox.Text);
+            itemVm.Reorder = reorderTextBox.Text;
 
             bool verify = itemManagement.IsVerified(item);
             if (verify)
@@ -98,11 +99,6 @@ namespace StockManagementSystem.UI.ItemSetup
                 return;
             }
 
-            if (reorderTextBox.Text == "")
-            {
-                return;
-            }
-            item.Reorder = Convert.ToInt32(reorderTextBox.Text);
 
             //Check Existing Item
             bool isExist = itemManagement.IsExisted(item);
@@ -118,16 +114,16 @@ namespace StockManagementSystem.UI.ItemSetup
             bool isAdd = itemManagement.IsAdded(item);
             if (isAdd)
             {
-                MessageBox.Show("New Item Successfully Add!!");
+                //MessageBox.Show("New Item Successfully Add!!");
+
+                itemDataGridView.DataSource = null;
+                itemDataGridView.DataSource = disItemVms;
+
                 nameTextBox.Clear();
                 reorderTextBox.Clear();
                 reorderErrorLabel.Text = "";
             }
 
-            //Add Gridview
-            itemDataGridView.DataSource = null;
-            itemDataGridView.DataSource = disItemVms;
-            //stockOutDataGridView.Columns["ItemId"].Visible = false;
 
         }
 

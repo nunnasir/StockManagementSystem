@@ -68,6 +68,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\Stockin.cs" />
+    <Compile Include="Models\StockInVM.cs" />
     <Compile Include="Models\StockOut.cs" />
     <Compile Include="Models\StockOutVM.cs" />
     <Compile Include="UI\CategoryUI\CategoryForm.cs">

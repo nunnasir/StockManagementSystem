@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace StockManagementSystem.Models
 {
-    public class ItemVM
+    public class StockInVM
     {
-        public string Category { get; set; }
+        public string Item { get; set; }
         public string Company { get; set; }
-        public string Name { get; set; }
-        public string Reorder { get; set; }
+        public string Quantity { get; set; }
     }
 }

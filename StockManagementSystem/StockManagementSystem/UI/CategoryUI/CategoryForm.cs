@@ -36,7 +36,7 @@ namespace StockManagementSystem.UI.CategoryUI
             bool isExist = categoryManagement.IsExisted(category);
             if (isExist)
             {
-                categoryErrorLabel.Text = "* This Categerory Already Existed!!";
+                categoryErrorLabel.Text = "*This Categerory Already Existed!!";
                 return;
             }
             categoryErrorLabel.Text = "";
@@ -44,7 +44,7 @@ namespace StockManagementSystem.UI.CategoryUI
             bool verify = categoryManagement.IsVerified(category);
             if (verify)
             {
-                MessageBox.Show("Field Must Not Be Empty!!");
+                categoryErrorLabel.Text = "*Field Must Not Be Empty!!";
                 return;
             }
             
@@ -53,7 +53,8 @@ namespace StockManagementSystem.UI.CategoryUI
             if (isAdd)
             {
                 nameTextBox.Clear();
-                
+                categoryErrorLabel.Text = "";
+
                 DataTable dt = new DataTable();
                 dt = categoryRepository.AddCategory();
                 categoryDataGridView.DataSource = dt;
@@ -80,23 +81,23 @@ namespace StockManagementSystem.UI.CategoryUI
             bool verify = categoryManagement.IsVerified(category);
             if (verify)
             {
-                MessageBox.Show("Field Must Not Be Empty!!");
+                categoryErrorLabel.Text = "*Field Must Not Be Empty!!";
                 return;
             }
 
             bool isExist = categoryManagement.IsExisted(category);
             if (isExist)
             {
-                categoryErrorLabel.Text = "* This Categerory Already Existed!!";
+                categoryErrorLabel.Text = "*This Categerory Already Existed!!";
                 return;
             }
-            categoryErrorLabel.Text = "";
 
             bool isUpdate = categoryManagement.IsUpdated(category);
             if (isUpdate)
             {
                 MessageBox.Show("Update Successfully!!");
                 nameTextBox.Clear();
+                categoryErrorLabel.Text = "";
                 UpdateButton.Hide();
                 SaveButton.Show();
                 DataTable dt = new DataTable();

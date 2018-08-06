@@ -17,7 +17,7 @@ namespace StockManagementSystem.DAL
         public DataTable LoadDateSearchItem(DateSearch dateSearch)
         {
             SqlConnection conn = new SqlConnection(connection.connectionDb);
-            string query = @"SELECT ite.Name ItemName, sto.Quantity Quantity FROM StockOut sto INNER JOIN Items ite ON sto.ItemId = ite.Id WHERE Date BETWEEN '"+dateSearch.FromDate+"' AND '"+dateSearch.ToDate+"' AND MediumId = 1";
+            string query = @"SELECT ite.Name ItemName, sto.Quantity Quantity FROM StockOut sto INNER JOIN Items ite ON sto.ItemId = ite.Id WHERE Date BETWEEN '" + dateSearch.FromDate + "' AND '" + dateSearch.ToDate + "' AND MediumId = 1 ORDER BY sto.Id DESC";
             SqlCommand command = new SqlCommand(query, conn);
             conn.Open();
             SqlDataReader sd = command.ExecuteReader();

@@ -13,7 +13,7 @@ namespace StockManagementSystem.Models
         public string Company { get; set; }
         public string Name { get; set; }
         public string ReorderError { get; set; }
-        public int Reorder { get; set; }
+        public string Reorder { get; set; }
         public string ErrorText { get; set; }
         public int quantity = 0;
     }

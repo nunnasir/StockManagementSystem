@@ -23,7 +23,7 @@ namespace StockManagementSystem.BLL
         //Verified Field
         public bool IsVerified(Item item)
         {
-            if (string.IsNullOrEmpty(item.Name) || string.IsNullOrEmpty(item.Category) || string.IsNullOrEmpty(item.Company) || string.IsNullOrEmpty(item.Name))
+            if (string.IsNullOrEmpty(item.Name) || string.IsNullOrEmpty(item.Category) || string.IsNullOrEmpty(item.Company) || string.IsNullOrEmpty(item.Reorder))
             {
                 return true;
             }

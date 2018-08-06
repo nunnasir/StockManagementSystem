@@ -33,23 +33,22 @@ namespace StockManagementSystem.UI.Company
             bool isExist = companyManagement.IsExisted(companny);
             if (isExist)
             {
-                categoryErrorLabel.Text = "* This Categerory Already Existed!!";
+                categoryErrorLabel.Text = "*This Company Already Existed!!";
                 return;
             }
-            categoryErrorLabel.Text = "";
 
             bool verify = companyManagement.IsVerified(companny);
             if (verify)
             {
-                MessageBox.Show("Field Must Not Be Empty!!");
+                categoryErrorLabel.Text = "*Field Must Not Be Empty!!!!";
                 return;
             }
-
 
             bool isAdd = companyManagement.IsAdded(companny);
             if (isAdd)
             {
                 nameTextBox.Clear();
+                categoryErrorLabel.Text = "";
 
                 DataTable dt = new DataTable();
                 dt = companyRepository.AddCompany();
@@ -75,22 +74,22 @@ namespace StockManagementSystem.UI.Company
             bool verify = companyManagement.IsVerified(companny);
             if (verify)
             {
-                MessageBox.Show("Field Must Not Be Empty!!");
+                categoryErrorLabel.Text = "*Field Must Not Be Empty!!!!";
                 return;
             }
 
             bool isExist = companyManagement.IsExisted(companny);
             if (isExist)
             {
-                categoryErrorLabel.Text = "* This Company Already Existed!!";
+                categoryErrorLabel.Text = "*This Company Already Existed!!";
                 return;
             }
-            categoryErrorLabel.Text = "";
 
             bool isUpdate = companyManagement.IsUpdated(companny);
             if (isUpdate)
             {
                 MessageBox.Show("Update Successfully!!");
+                categoryErrorLabel.Text = "";
                 nameTextBox.Clear();
                 UpdateButton.Hide();
                 SaveButton.Show();

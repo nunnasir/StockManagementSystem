@@ -94,6 +94,23 @@ namespace StockManagementSystem.UI.StockOutUI
             conn.Close();
         }
 
+        private void stockQuantityTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string temp = stockQuantityTextBox.Text;
+
+            foreach (char c in temp)
+            {
+                if (char.IsDigit(c) == false)
+                {
+                    errorQuantityLabel.Text = "Invalid Quantity!!";
+                }
+                else
+                {
+                    errorQuantityLabel.Text = "";
+                }
+            }
+        }
+
         List<StockOut> stockoutsiList = new List<StockOut>();
         List<StockOutVM> stockOutDisplayList = new List<StockOutVM>();
 
@@ -101,6 +118,7 @@ namespace StockManagementSystem.UI.StockOutUI
         {
             StockOutVM stockOutVm = new StockOutVM();
 
+            int avQuantity = Convert.ToInt32(availableTextBox.Text);
             stockOut.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
             stockOut.Category = categoryComboBox.GetItemText(companyComboBox.SelectedItem);
             stockOut.Item = itemComboBox.GetItemText(itemComboBox.SelectedItem);
@@ -112,19 +130,19 @@ namespace StockManagementSystem.UI.StockOutUI
             stockOutVm.ItemName = itemComboBox.GetItemText(itemComboBox.SelectedItem);
             stockOutVm.StockOutQuantity = stockQuantityTextBox.Text;
 
-
-            //Check Quantity
-            SqlConnection conn = new SqlConnection(connection.connectionDb);
-            string query = @"select * from Inventory where Quantity >= "+stockOutVm.StockOutQuantity+" AND ItemId = "+stockOutVm.ItemId+" ";
-            SqlCommand command = new SqlCommand(query,conn);
-            conn.Open();
-            bool isRowAffected = command.ExecuteNonQuery() > 0;
-            conn.Close();
-            if (!isRowAffected)
+            if (string.IsNullOrEmpty(stockQuantityTextBox.Text))
             {
-                errorQuantityLabel.Text = "Unavailable quantity";
+                //MessageBox.Show("stock out must not be empty");
+                errorQuantityLabel.Text = "*stock out must not be empty!!";
                 return;
             }
+
+            if (avQuantity < Convert.ToInt32(stockOut.SOQuantity))
+            {
+                errorQuantityLabel.Text = "*sorry unavailable Items!!";
+                return;
+            }
+
 
 
             //Add List
@@ -140,6 +158,7 @@ namespace StockManagementSystem.UI.StockOutUI
             reorderTextBox.Clear();
             availableTextBox.Clear();
             itemComboBox.ResetText();
+            errorQuantityLabel.Text = "";
 
         }
 
@@ -257,6 +276,8 @@ namespace StockManagementSystem.UI.StockOutUI
                 MessageBox.Show("There is no any selected Item!!");
             }
         }
-        
+
+
+
     }
 }

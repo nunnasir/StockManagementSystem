@@ -106,6 +106,7 @@
             this.stockQuantityTextBox.Name = "stockQuantityTextBox";
             this.stockQuantityTextBox.Size = new System.Drawing.Size(274, 20);
             this.stockQuantityTextBox.TabIndex = 22;
+            this.stockQuantityTextBox.TextChanged += new System.EventHandler(this.stockQuantityTextBox_TextChanged);
             // 
             // availableTextBox
             // 
@@ -233,39 +234,37 @@
             // stockOutDataGridView
             // 
             this.stockOutDataGridView.AllowUserToAddRows = false;
-            this.stockOutDataGridView.AllowUserToDeleteRows = false;
             this.stockOutDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.stockOutDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.stockOutDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.stockoutgridItem,
             this.stockoutgridcompany,
             this.stockoutgridquantity});
-            this.stockOutDataGridView.Location = new System.Drawing.Point(67, 214);
+            this.stockOutDataGridView.Location = new System.Drawing.Point(67, 215);
             this.stockOutDataGridView.Name = "stockOutDataGridView";
-            this.stockOutDataGridView.ReadOnly = true;
             this.stockOutDataGridView.Size = new System.Drawing.Size(667, 150);
             this.stockOutDataGridView.TabIndex = 29;
             // 
             // stockoutgridItem
             // 
             this.stockoutgridItem.DataPropertyName = "ItemName";
+            this.stockoutgridItem.FillWeight = 65.65144F;
             this.stockoutgridItem.HeaderText = "Item";
             this.stockoutgridItem.Name = "stockoutgridItem";
-            this.stockoutgridItem.ReadOnly = true;
             // 
             // stockoutgridcompany
             // 
             this.stockoutgridcompany.DataPropertyName = "CompanyName";
+            this.stockoutgridcompany.FillWeight = 65.65144F;
             this.stockoutgridcompany.HeaderText = "Company";
             this.stockoutgridcompany.Name = "stockoutgridcompany";
-            this.stockoutgridcompany.ReadOnly = true;
             // 
             // stockoutgridquantity
             // 
             this.stockoutgridquantity.DataPropertyName = "StockOutQuantity";
+            this.stockoutgridquantity.FillWeight = 65.65144F;
             this.stockoutgridquantity.HeaderText = "Quantity";
             this.stockoutgridquantity.Name = "stockoutgridquantity";
-            this.stockoutgridquantity.ReadOnly = true;
             // 
             // DamageButton
             // 
@@ -380,10 +379,10 @@
         private System.Windows.Forms.BindingSource compannyBindingSource;
         private System.Windows.Forms.BindingSource itemBindingSource;
         private System.Windows.Forms.BindingSource categoryBindingSource;
+        private System.Windows.Forms.Label errorQuantityLabel;
+        private System.Windows.Forms.Label ReorderErrorLavel;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridcompany;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockoutgridquantity;
-        private System.Windows.Forms.Label errorQuantityLabel;
-        private System.Windows.Forms.Label ReorderErrorLavel;
     }
 }

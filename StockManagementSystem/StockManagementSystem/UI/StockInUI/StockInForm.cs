@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -100,14 +101,22 @@ namespace StockManagementSystem.UI.StockInUI
             conn.Close();
         }
 
+        List<StockInVM> showStockInVm = new List<StockInVM>();
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            StockInVM stockInVm = new StockInVM();
+
             //stockin.SIQuantity = Convert.ToInt32(stockQuantityTextBox.Text);
             stockin.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
             stockin.Category = categoryComboBox.GetItemText(categoryComboBox.SelectedItem);
             stockin.Item = itemComboBox.GetItemText(itemComboBox.SelectedItem);
             stockin.SIQuantity = stockQuantityTextBox.Text;
             stockin.ErrorText = stockQuantityLabel.Text;
+
+            stockInVm.Item = itemComboBox.GetItemText(itemComboBox.SelectedItem);
+            stockInVm.Company = companyComboBox.GetItemText(companyComboBox.SelectedItem);
+            stockInVm.Quantity = stockQuantityTextBox.Text;
+
 
             bool verify = stockinManager.IsVerified(stockin);
             if (verify)
@@ -124,17 +133,29 @@ namespace StockManagementSystem.UI.StockInUI
                 return;
             }
 
+            showStockInVm.Add(stockInVm);
 
             bool isAdd = stockinManager.IsAdded(stockin);
             if (isAdd)
             {
-                MessageBox.Show("Stock in successfully!!");
+                //MessageBox.Show("Stock in successfully!!");
+                stockInDataGridView.DataSource = null;
+                stockInDataGridView.DataSource = showStockInVm;
+
                 stockQuantityTextBox.Clear();
                 availableTextBox.Clear();
                 reorderTextBox.Clear();
                 stockQuantityLabel.Text = "";
                 itemComboBox.ResetText();
+                ReorderErrorLavel.Text = "";
             }
+
+
+            //showStockInVm.Add(stockInVm);
+
+            //stockInDataGridView.DataSource = null;
+            //stockInDataGridView.DataSource = showStockInVm;
+
         }
 
         private void stockQuantityTextBox_TextChanged(object sender, EventArgs e)
