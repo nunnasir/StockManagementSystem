@@ -103,11 +103,9 @@ namespace StockManagementSystem.UI.StockOutUI
                 if (char.IsDigit(c) == false)
                 {
                     errorQuantityLabel.Text = "Invalid Quantity!!";
+                    return;
                 }
-                else
-                {
-                    errorQuantityLabel.Text = "";
-                }
+                errorQuantityLabel.Text = "";
             }
         }
 
@@ -135,8 +133,13 @@ namespace StockManagementSystem.UI.StockOutUI
                 selectItemErrorLabel.Text = "*Please Select Item";
                 return;
             }
-
             selectItemErrorLabel.Text = "";
+
+            if (!string.IsNullOrEmpty(errorQuantityLabel.Text))
+            {
+                MessageBox.Show("Please Resolve Your Error First!!");
+                return;
+            }
 
             if (string.IsNullOrEmpty(stockQuantityTextBox.Text))
             {
