@@ -127,6 +127,7 @@
     <Compile Include="UI\StockOutUI\StockOutForm.Designer.cs">
       <DependentUpon>StockOutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility\Utility.cs" />
     <EmbeddedResource Include="UI\CategoryUI\CategoryForm.resx">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </EmbeddedResource>
